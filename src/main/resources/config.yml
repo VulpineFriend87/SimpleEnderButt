@@ -4,7 +4,7 @@ item:
   lore: ["&7Right click to use"]
   slot: 0
   power: 3
-  block_click: true # Blocks the item from being clicked in the inventory, thus making it impossible to move (bypass in creative mode)
+  prevent_click: true
 sound:
   enabled: true
   name: BLOCK_NOTE_BLOCK_BIT
@@ -13,5 +13,3 @@ sound:
 
 messages:
   cooldown: "&cYou are on cooldown!"
-  reload: "&aReloaded!"
-  missing_permissions: "&cYou don't have permission!"

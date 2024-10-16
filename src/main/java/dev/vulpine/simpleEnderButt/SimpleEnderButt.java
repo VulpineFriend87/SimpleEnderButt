@@ -1,5 +1,6 @@
 package dev.vulpine.simpleEnderButt;
 
+import dev.vulpine.simpleEnderButt.command.MainCommand;
 import dev.vulpine.simpleEnderButt.listener.MainListener;
 import dev.vulpine.simpleEnderButt.manager.ConfigManager;
 import it.vulpinefriend87.easyutils.Colorize;
@@ -32,6 +33,10 @@ public final class SimpleEnderButt extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(Colorize.color("&7 [!] Inizializing MainListener..."));
 
         getServer().getPluginManager().registerEvents(new MainListener(this), this);
+
+        getServer().getConsoleSender().sendMessage(Colorize.color("&7 [!] Inizializing MainCommand..."));
+
+        getCommand("simpleenderbutt").setExecutor(new MainCommand(this));
 
         getServer().getConsoleSender().sendMessage(Colorize.color("&a [+] Plugin started!"));
 

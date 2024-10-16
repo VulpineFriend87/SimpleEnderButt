@@ -2,6 +2,7 @@ package dev.vulpine.simpleEnderButt.listener;
 
 import dev.vulpine.simpleEnderButt.SimpleEnderButt;
 import it.vulpinefriend87.easyutils.EasyItem;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,6 +60,12 @@ public class MainListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
 
         Player player = (Player) event.getWhoClicked();
+
+        if (!plugin.getConfigManager().getItemPreventClick() && player.getGameMode() == GameMode.CREATIVE) {
+
+            return;
+
+        }
 
         if (event.getCurrentItem().isSimilar(item.getItemStack()) && event.getSlot() == plugin.getConfigManager().getItemSlot()) {
 

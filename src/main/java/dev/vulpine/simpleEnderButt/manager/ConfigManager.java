@@ -57,6 +57,10 @@ public record ConfigManager(SimpleEnderButt plugin) {
         return plugin.getConfig().getInt("item.power");
     }
 
+    public boolean getItemPreventClick() {
+        return plugin.getConfig().getBoolean("item.prevent_click");
+    }
+
     public boolean getSoundEnabled() {
         return plugin.getConfig().getBoolean("sound.enabled");
     }
@@ -79,14 +83,6 @@ public record ConfigManager(SimpleEnderButt plugin) {
 
     public String getCooldownMessage() {
         return Colorize.color(plugin.getConfig().getString("messages.cooldown"));
-    }
-
-    public String getReloadMessage() {
-        return Colorize.color(plugin.getConfig().getString("messages.reload"));
-    }
-
-    public String getMissingPermissionsMessage() {
-        return Colorize.color(plugin.getConfig().getString("messages.missing-permissions"));
     }
 
 }

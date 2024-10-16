@@ -1,3 +1,7 @@
 name: SimpleEnderButt
 version: '1.0'
 main: dev.vulpine.simpleEnderButt.SimpleEnderButt
+
+commands:
+  simpleenderbutt:
+    aliases: [seb, enderbutt, eb, senderbutt, simpleeb, senderb]
