@@ -1,0 +1,17 @@
+cooldown: 1.0 # Decimal value, Set to -1 to disable
+item:
+  name: "&d&lSimple Ender Butt"
+  lore: ["&7Right click to use"]
+  slot: 0
+  power: 3
+  block_click: true # Blocks the item from being clicked in the inventory, thus making it impossible to move (bypass in creative mode)
+sound:
+  enabled: true
+  name: BLOCK_NOTE_BLOCK_BIT
+  pitch: 1.0
+  volume: 1.0
+
+messages:
+  cooldown: "&cYou are on cooldown!"
+  reload: "&aReloaded!"
+  missing_permissions: "&cYou don't have permission!"
