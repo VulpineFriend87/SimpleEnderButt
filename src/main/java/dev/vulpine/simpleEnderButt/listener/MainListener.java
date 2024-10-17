@@ -61,7 +61,7 @@ public class MainListener implements Listener {
 
         Player player = (Player) event.getWhoClicked();
 
-        if (!plugin.getConfigManager().getItemPreventClick() && player.getGameMode() == GameMode.CREATIVE) {
+        if (!plugin.getConfigManager().getItemPreventClick() || player.getGameMode() == GameMode.CREATIVE) {
 
             return;
 
