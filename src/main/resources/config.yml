@@ -9,6 +9,3 @@ sound:
   name: BLOCK_NOTE_BLOCK_BIT
   pitch: 1.0
   volume: 1.0
-
-messages:
-  cooldown: "&cYou are on cooldown!"
