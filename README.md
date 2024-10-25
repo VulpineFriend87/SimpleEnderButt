@@ -1,4 +1,6 @@
-https://raw.githubusercontent.com/VulpineFriend87/SimpleEnderButt/refs/heads/master/SEB.png
+<p align="center">
+    <img src="https://raw.githubusercontent.com/VulpineFriend87/SimpleEnderButt/refs/heads/master/SEB.png">
+</p>
 
 # SimpleEnderButt
 The best EnderButt plugin out there. Simple & Customizable.
