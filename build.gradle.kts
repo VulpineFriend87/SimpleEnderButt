@@ -15,6 +15,7 @@ repositories {
 dependencies {
     implementation(libs.minimessage)
     implementation(libs.minimessage.legacy)
+    implementation(libs.bstats)
 
     compileOnly(libs.spigot)
 }
@@ -43,6 +44,7 @@ tasks {
         }
 
         shade("net.kyori.adventure", "adventure")
+        shade("org.bstats", "bstats")
     }
 
     build {

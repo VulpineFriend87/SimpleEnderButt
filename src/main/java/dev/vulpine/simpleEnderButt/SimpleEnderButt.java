@@ -8,12 +8,15 @@ import dev.vulpine.simpleEnderButt.scheduler.SchedulerAdapter;
 import dev.vulpine.simpleEnderButt.util.logger.LogLevel;
 import dev.vulpine.simpleEnderButt.util.logger.Logger;
 import lombok.Getter;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
 public final class SimpleEnderButt extends JavaPlugin {
 
     private SchedulerAdapter scheduler;
+
+    private static final int PLUGIN_ID = 31454;
 
     @Override
     public void onEnable() {
@@ -61,6 +64,10 @@ public final class SimpleEnderButt extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MainListener(this), this);
 
         getCommand("simpleenderbutt").setExecutor(new MainCommand(this));
+
+        Logger.debug("Initializing metrics...");
+
+        new Metrics(this, PLUGIN_ID);
 
         new UpdateNotifier(this, "simpleenderbutt",
                 "<gray>[<b><light_purple>SEB</b><gray>] <white>A new version of SimpleEnderButt is available! <gray>(<st>%current%</st> <green>%new%<gray>)");
