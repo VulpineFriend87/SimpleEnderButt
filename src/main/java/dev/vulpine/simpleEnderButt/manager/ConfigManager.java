@@ -1,12 +1,15 @@
 package dev.vulpine.simpleEnderButt.manager;
 
 import dev.vulpine.simpleEnderButt.SimpleEnderButt;
-import it.vulpinefriend87.easyutils.Colorize;
+import dev.vulpine.simpleEnderButt.util.Colorize;
 import org.bukkit.Sound;
 
 import java.util.List;
+import java.util.Objects;
 
-public record ConfigManager(SimpleEnderButt plugin) {
+public class ConfigManager {
+
+    private final SimpleEnderButt plugin;
 
     public ConfigManager(SimpleEnderButt plugin) {
         this.plugin = plugin;
@@ -32,7 +35,7 @@ public record ConfigManager(SimpleEnderButt plugin) {
 
         cooldown = plugin.getConfig().getString("cooldown");
 
-        if (cooldown == "" || cooldown == "-1") {
+        if (Objects.equals(cooldown, "") || Objects.equals(cooldown, "-1")) {
 
             return null;
 

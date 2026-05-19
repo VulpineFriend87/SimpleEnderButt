@@ -3,9 +3,11 @@ package dev.vulpine.simpleEnderButt;
 import dev.vulpine.simpleEnderButt.command.MainCommand;
 import dev.vulpine.simpleEnderButt.listener.MainListener;
 import dev.vulpine.simpleEnderButt.manager.ConfigManager;
-import it.vulpinefriend87.easyutils.Colorize;
+import dev.vulpine.simpleEnderButt.util.Colorize;
+import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@Getter
 public final class SimpleEnderButt extends JavaPlugin {
 
     private ConfigManager configManager;
@@ -44,7 +46,4 @@ public final class SimpleEnderButt extends JavaPlugin {
 
     }
 
-    public ConfigManager getConfigManager() {
-        return configManager;
-    }
 }

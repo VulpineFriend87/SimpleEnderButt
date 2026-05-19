@@ -1,7 +1,6 @@
 package dev.vulpine.simpleEnderButt.listener;
 
 import dev.vulpine.simpleEnderButt.SimpleEnderButt;
-import it.vulpinefriend87.easyutils.EasyItem;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,18 +11,29 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class MainListener implements Listener {
 
     private final SimpleEnderButt plugin;
 
-    EasyItem item;
+    private final ItemStack item;
 
     public MainListener(SimpleEnderButt plugin) {
         this.plugin = plugin;
 
-        item = new EasyItem(Material.ENDER_PEARL, plugin.getConfigManager().getItemName(), plugin.getConfigManager().getItemLore());
+        ItemStack itemStack = new ItemStack(Material.ENDER_PEARL);
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta != null) {
+            meta.setDisplayName(plugin.getConfigManager().getItemName());
+            meta.setLore(plugin.getConfigManager().getItemLore());
+            itemStack.setItemMeta(meta);
+        }
+
+        this.item = itemStack;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -31,7 +41,7 @@ public class MainListener implements Listener {
 
         Player player = event.getPlayer();
 
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> player.getInventory().setItem(plugin.getConfigManager().getItemSlot(), item.getItemStack()), 10);
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> player.getInventory().setItem(plugin.getConfigManager().getItemSlot(), item), 10);
 
     }
 
@@ -40,7 +50,7 @@ public class MainListener implements Listener {
 
         Player player = event.getPlayer();
 
-        if (player.getItemInHand().isSimilar(item.getItemStack()) && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
+        if (player.getInventory().getItemInMainHand().isSimilar(item) && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
 
             Vector location = player.getLocation().getDirection();
 
@@ -67,7 +77,7 @@ public class MainListener implements Listener {
 
         }
 
-        if (event.getCurrentItem().isSimilar(item.getItemStack()) && event.getSlot() == plugin.getConfigManager().getItemSlot()) {
+        if (event.getCurrentItem().isSimilar(item) && event.getSlot() == plugin.getConfigManager().getItemSlot()) {
 
             event.setCancelled(true);
 
