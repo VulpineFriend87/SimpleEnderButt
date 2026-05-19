@@ -62,6 +62,9 @@ public final class SimpleEnderButt extends JavaPlugin {
 
         getCommand("simpleenderbutt").setExecutor(new MainCommand(this));
 
+        new UpdateNotifier(this, "simpleenderbutt",
+                "<gray>[<b><light_purple>SEB</b><gray>] <white>A new version of SimpleEnderButt is available! <gray>(<st>%current%</st> <green>%new%<gray>)");
+
         Logger.debug("SimpleEnderButt has been enabled succesfully.");
 
     }
