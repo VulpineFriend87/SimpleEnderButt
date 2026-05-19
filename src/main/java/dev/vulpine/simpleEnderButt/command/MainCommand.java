@@ -1,6 +1,8 @@
 package dev.vulpine.simpleEnderButt.command;
 
 import dev.vulpine.simpleEnderButt.SimpleEnderButt;
+import dev.vulpine.simpleEnderButt.util.Colorize;
+import dev.vulpine.simpleEnderButt.util.PermissionChecker;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,23 +21,23 @@ public class MainCommand implements CommandExecutor {
 
         String[] message = {
                 "",
-                "§7 This server is running",
+                "<gray> This server is running",
                 "",
-                "§d SimpleEnderButt",
-                "§7 by VulpineFriend87",
+                "<light_purple> SimpleEnderButt",
+                "<gray> by VulpineFriend87",
                 ""
         };
 
         for (String line : message) {
-            sender.sendMessage(line);
+            sender.sendMessage(Colorize.color(line));
         }
 
-        if (sender.hasPermission("simpleenderbutt.admin")) {
+        if (PermissionChecker.hasPermission(sender, "reload")) {
 
             plugin.reloadConfig();
 
-            sender.sendMessage("§a [+] Config reloaded!");
-            sender.sendMessage("§r");
+            sender.sendMessage(Colorize.color("<green> [+] Config reloaded!"));
+            sender.sendMessage(Colorize.color("<reset>"));
 
         }
 
