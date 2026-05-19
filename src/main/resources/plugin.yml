@@ -1,6 +1,10 @@
 name: SimpleEnderButt
 version: '1.0'
 main: dev.vulpine.simpleEnderButt.SimpleEnderButt
+api-version: '1.18'
+folia-supported: true
+authors: [ VulpineFriend87 ]
+website: https://vulpine.top
 
 commands:
   simpleenderbutt:

@@ -2,10 +2,12 @@ package dev.vulpine.simpleEnderButt.manager;
 
 import dev.vulpine.simpleEnderButt.SimpleEnderButt;
 import dev.vulpine.simpleEnderButt.instance.Cooldown;
+import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
+@Getter
 public class CooldownManager {
 
     private final SimpleEnderButt plugin;
@@ -20,7 +22,7 @@ public class CooldownManager {
 
         cooldowns.remove(item);
 
-        Cooldown cooldown = new Cooldown(this, plugin.getConfigManager().getCooldownTime());
+        Cooldown cooldown = new Cooldown(this, plugin.getConfig().getInt("cooldown_time"));
 
         cooldown.start();
         cooldowns.put(item, cooldown);
@@ -53,14 +55,6 @@ public class CooldownManager {
         });
     }
 
-
-    public SimpleEnderButt getPlugin() {
-        return plugin;
-    }
-
-    public HashMap<ItemStack, Cooldown> getCooldowns() {
-        return cooldowns;
-    }
 
     public Cooldown getCooldown(ItemStack item) {
         return cooldowns.get(item);

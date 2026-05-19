@@ -3,8 +3,7 @@ package dev.vulpine.simpleEnderButt.listener;
 import dev.vulpine.simpleEnderButt.SimpleEnderButt;
 import dev.vulpine.simpleEnderButt.instance.Cooldown;
 import dev.vulpine.simpleEnderButt.manager.CooldownManager;
-import it.vulpinefriend87.easyutils.Colorize;
-import it.vulpinefriend87.easyutils.EasyItem;
+import dev.vulpine.simpleEnderButt.util.Colorize;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,18 +14,29 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class MainListener implements Listener {
 
     private final SimpleEnderButt plugin;
 
-    EasyItem item;
+    private final ItemStack item;
 
     public MainListener(SimpleEnderButt plugin) {
         this.plugin = plugin;
 
-        item = new EasyItem(Material.ENDER_PEARL, plugin.getConfigManager().getItemName(), plugin.getConfigManager().getItemLore());
+        ItemStack itemStack = new ItemStack(Material.ENDER_PEARL);
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta != null) {
+            meta.setDisplayName(Colorize.color(plugin.getConfig().getString("item.name")));
+            meta.setLore(Colorize.color(plugin.getConfig().getStringList("item.lore")));
+            itemStack.setItemMeta(meta);
+        }
+
+        this.item = itemStack;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -34,7 +44,7 @@ public class MainListener implements Listener {
 
         Player player = event.getPlayer();
 
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> player.getInventory().setItem(plugin.getConfigManager().getItemSlot(), item.getItemStack()), 10);
+        plugin.getScheduler().runEntityLater(player, () -> player.getInventory().setItem(plugin.getConfig().getInt("item.slot"), item), 10);
 
     }
 
@@ -52,21 +62,21 @@ public class MainListener implements Listener {
 
             if (cooldown.isActive()) {
 
-                player.sendMessage(Colorize.color(cooldownManager.getPlugin().getConfigManager().getCooldownMessage().replace("%cooldown%", String.valueOf(cooldown.getRemainingTime()))));
+                player.sendMessage(Colorize.color(plugin.getConfig().getString("messages.cooldown").replace("%cooldown%", String.valueOf(cooldown.getRemainingTime()))));
                 return;
 
             }
 
         }
 
-        if (player.getItemInHand().isSimilar(item.getItemStack()) && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
+        if (player.getInventory().getItemInMainHand().isSimilar(item) && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
 
             Vector location = player.getLocation().getDirection();
 
-            player.setVelocity(location.multiply(plugin.getConfigManager().getItemPower()));
+            player.setVelocity(location.multiply(plugin.getConfig().getDouble("item.power")));
 
-            if (plugin.getConfigManager().getSoundEnabled()) {
-                player.playSound(player.getLocation(), plugin.getConfigManager().getSound(), plugin.getConfigManager().getSoundVolume(), plugin.getConfigManager().getSoundPitch());
+            if (plugin.getConfig().getBoolean("sound.enabled")) {
+                player.playSound(player.getLocation(), plugin.getConfig().getString("sound.name"), (float) plugin.getConfig().getDouble("sound.volume"), (float) plugin.getConfig().getDouble("sound.pitch"));
             }
 
             cooldownManager.addCooldown(player.getItemInHand());
@@ -80,13 +90,13 @@ public class MainListener implements Listener {
 
         Player player = (Player) event.getWhoClicked();
 
-        if (!plugin.getConfigManager().getItemPreventClick() || player.getGameMode() == GameMode.CREATIVE) {
+        if (!plugin.getConfig().getBoolean("item.prevent_click") || player.getGameMode() == GameMode.CREATIVE) {
 
             return;
 
         }
 
-        if (event.getCurrentItem().isSimilar(item.getItemStack()) && event.getSlot() == plugin.getConfigManager().getItemSlot()) {
+        if (event.getCurrentItem().isSimilar(item) && event.getSlot() == plugin.getConfig().getInt("item.slot")) {
 
             event.setCancelled(true);
 

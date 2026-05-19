@@ -1,8 +1,10 @@
 package dev.vulpine.simpleEnderButt.instance;
 
 import dev.vulpine.simpleEnderButt.manager.CooldownManager;
+import lombok.Getter;
 import org.bukkit.scheduler.BukkitRunnable;
 
+@Getter
 public class Cooldown extends BukkitRunnable {
 
     private final CooldownManager cooldownManager;
@@ -33,14 +35,6 @@ public class Cooldown extends BukkitRunnable {
     public void start() {
         remainingTime = totalTime;
         runTaskTimer(cooldownManager.getPlugin(), 0, 1);
-    }
-
-    public int getTotalTime() {
-        return totalTime;
-    }
-
-    public int getRemainingTime() {
-        return remainingTime;
     }
 
     public boolean isActive() {

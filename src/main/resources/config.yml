@@ -14,3 +14,7 @@ sound:
 
 messages:
   cooldown: "&cYou must wait &7%cooldown% &cseconds before using this item again!" # Placeholders: %cooldown%
+
+# Log level for the plugin. Can be: DEBUG, INFO, WARN, ERROR.
+# Leave as it is if you don't know what to choose.
+log_level: INFO
