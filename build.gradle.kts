@@ -30,6 +30,10 @@ java {
 }
 
 tasks {
+    jar {
+        enabled = false
+    }
+
     shadowJar {
         archiveFileName.set("${project.name}-${project.version}.jar")
 
@@ -39,5 +43,9 @@ tasks {
         }
 
         shade("net.kyori.adventure", "adventure")
+    }
+
+    build {
+        dependsOn(shadowJar)
     }
 }
