@@ -42,7 +42,7 @@ public class MainListener implements Listener {
 
         Player player = event.getPlayer();
 
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> player.getInventory().setItem(plugin.getConfig().getInt("item.slot"), item), 10);
+        plugin.getScheduler().runEntityLater(player, () -> player.getInventory().setItem(plugin.getConfig().getInt("item.slot"), item), 10);
 
     }
 

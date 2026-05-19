@@ -2,6 +2,9 @@ package dev.vulpine.simpleEnderButt;
 
 import dev.vulpine.simpleEnderButt.command.MainCommand;
 import dev.vulpine.simpleEnderButt.listener.MainListener;
+import dev.vulpine.simpleEnderButt.scheduler.BukkitSchedulerAdapter;
+import dev.vulpine.simpleEnderButt.scheduler.FoliaScheduler;
+import dev.vulpine.simpleEnderButt.scheduler.SchedulerAdapter;
 import dev.vulpine.simpleEnderButt.util.logger.LogLevel;
 import dev.vulpine.simpleEnderButt.util.logger.Logger;
 import lombok.Getter;
@@ -10,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 @Getter
 public final class SimpleEnderButt extends JavaPlugin {
 
+    private SchedulerAdapter scheduler;
 
     @Override
     public void onEnable() {
@@ -24,6 +28,18 @@ public final class SimpleEnderButt extends JavaPlugin {
             logLevel = LogLevel.INFO;
         }
         Logger.init(logLevel);
+
+        boolean folia;
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+            folia = true;
+        } catch (ClassNotFoundException e) {
+            folia = false;
+        }
+        this.scheduler = folia ? new FoliaScheduler(this) : new BukkitSchedulerAdapter(this);
+        Logger.debug("Detected " + (folia ? "Folia" : "Bukkit/Spigot") + " server, using "
+                + scheduler.getClass().getSimpleName());
+
 
         String[] message = {
                 "",
