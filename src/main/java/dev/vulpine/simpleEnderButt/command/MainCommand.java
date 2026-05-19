@@ -32,7 +32,7 @@ public class MainCommand implements CommandExecutor {
 
         if (sender.hasPermission("simpleenderbutt.admin")) {
 
-            plugin.getConfigManager().reload();
+            plugin.reloadConfig();
 
             sender.sendMessage("§a [+] Config reloaded!");
             sender.sendMessage("§r");

@@ -1,6 +1,7 @@
 package dev.vulpine.simpleEnderButt.listener;
 
 import dev.vulpine.simpleEnderButt.SimpleEnderButt;
+import dev.vulpine.simpleEnderButt.util.Colorize;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,8 +29,8 @@ public class MainListener implements Listener {
         ItemMeta meta = itemStack.getItemMeta();
 
         if (meta != null) {
-            meta.setDisplayName(plugin.getConfigManager().getItemName());
-            meta.setLore(plugin.getConfigManager().getItemLore());
+            meta.setDisplayName(Colorize.color(plugin.getConfig().getString("item.name")));
+            meta.setLore(Colorize.color(plugin.getConfig().getStringList("item.lore")));
             itemStack.setItemMeta(meta);
         }
 
@@ -41,7 +42,7 @@ public class MainListener implements Listener {
 
         Player player = event.getPlayer();
 
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> player.getInventory().setItem(plugin.getConfigManager().getItemSlot(), item), 10);
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> player.getInventory().setItem(plugin.getConfig().getInt("item.slot"), item), 10);
 
     }
 
@@ -54,10 +55,10 @@ public class MainListener implements Listener {
 
             Vector location = player.getLocation().getDirection();
 
-            player.setVelocity(location.multiply(plugin.getConfigManager().getItemPower()));
+            player.setVelocity(location.multiply(plugin.getConfig().getDouble("item.power")));
 
-            if (plugin.getConfigManager().getSoundEnabled()) {
-                player.playSound(player.getLocation(), plugin.getConfigManager().getSound(), plugin.getConfigManager().getSoundVolume(), plugin.getConfigManager().getSoundPitch());
+            if (plugin.getConfig().getBoolean("sound.enabled")) {
+                player.playSound(player.getLocation(), plugin.getConfig().getString("sound.name"), (float) plugin.getConfig().getDouble("sound.volume"), (float) plugin.getConfig().getDouble("sound.pitch"));
             }
 
             event.setCancelled(true);
@@ -71,13 +72,13 @@ public class MainListener implements Listener {
 
         Player player = (Player) event.getWhoClicked();
 
-        if (!plugin.getConfigManager().getItemPreventClick() || player.getGameMode() == GameMode.CREATIVE) {
+        if (!plugin.getConfig().getBoolean("item.prevent_click") || player.getGameMode() == GameMode.CREATIVE) {
 
             return;
 
         }
 
-        if (event.getCurrentItem().isSimilar(item) && event.getSlot() == plugin.getConfigManager().getItemSlot()) {
+        if (event.getCurrentItem().isSimilar(item) && event.getSlot() == plugin.getConfig().getInt("item.slot")) {
 
             event.setCancelled(true);
 
