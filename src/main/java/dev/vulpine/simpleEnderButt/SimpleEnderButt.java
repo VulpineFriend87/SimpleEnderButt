@@ -3,12 +3,14 @@ package dev.vulpine.simpleEnderButt;
 import dev.vulpine.simpleEnderButt.command.MainCommand;
 import dev.vulpine.simpleEnderButt.listener.MainListener;
 import dev.vulpine.simpleEnderButt.manager.ConfigManager;
+import dev.vulpine.simpleEnderButt.manager.CooldownManager;
 import it.vulpinefriend87.easyutils.Colorize;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SimpleEnderButt extends JavaPlugin {
 
     private ConfigManager configManager;
+    private CooldownManager cooldownManager;
 
     @Override
     public void onEnable() {
@@ -30,6 +32,10 @@ public final class SimpleEnderButt extends JavaPlugin {
 
         configManager = new ConfigManager(this);
 
+        getServer().getConsoleSender().sendMessage(Colorize.color("&7 [!] Inizializing CooldownManager..."));
+
+        cooldownManager = new CooldownManager(this);
+
         getServer().getConsoleSender().sendMessage(Colorize.color("&7 [!] Inizializing MainListener..."));
 
         getServer().getPluginManager().registerEvents(new MainListener(this), this);
@@ -46,5 +52,9 @@ public final class SimpleEnderButt extends JavaPlugin {
 
     public ConfigManager getConfigManager() {
         return configManager;
+    }
+
+    public CooldownManager getCooldownManager() {
+        return cooldownManager;
     }
 }

@@ -1,3 +1,5 @@
+cooldown_time: 1 # Set to 0 to disable
+
 item:
   name: "&d&lSimple Ender Butt"
   lore: ["&7Right click to use"]
@@ -9,3 +11,6 @@ sound:
   name: BLOCK_NOTE_BLOCK_BIT
   pitch: 1.0
   volume: 1.0
+
+messages:
+  cooldown: "&cYou must wait &7%cooldown% &cseconds before using this item again!" # Placeholders: %cooldown%

@@ -1,6 +1,9 @@
 package dev.vulpine.simpleEnderButt.listener;
 
 import dev.vulpine.simpleEnderButt.SimpleEnderButt;
+import dev.vulpine.simpleEnderButt.instance.Cooldown;
+import dev.vulpine.simpleEnderButt.manager.CooldownManager;
+import it.vulpinefriend87.easyutils.Colorize;
 import it.vulpinefriend87.easyutils.EasyItem;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -40,6 +43,22 @@ public class MainListener implements Listener {
 
         Player player = event.getPlayer();
 
+        event.setCancelled(true);
+
+        CooldownManager cooldownManager = plugin.getCooldownManager();
+        Cooldown cooldown = cooldownManager.getCooldown(player.getItemInHand());
+
+        if (cooldown != null) {
+
+            if (cooldown.isActive()) {
+
+                player.sendMessage(Colorize.color(cooldownManager.getPlugin().getConfigManager().getCooldownMessage().replace("%cooldown%", String.valueOf(cooldown.getRemainingTime()))));
+                return;
+
+            }
+
+        }
+
         if (player.getItemInHand().isSimilar(item.getItemStack()) && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
 
             Vector location = player.getLocation().getDirection();
@@ -50,7 +69,7 @@ public class MainListener implements Listener {
                 player.playSound(player.getLocation(), plugin.getConfigManager().getSound(), plugin.getConfigManager().getSoundVolume(), plugin.getConfigManager().getSoundPitch());
             }
 
-            event.setCancelled(true);
+            cooldownManager.addCooldown(player.getItemInHand());
 
         }
 

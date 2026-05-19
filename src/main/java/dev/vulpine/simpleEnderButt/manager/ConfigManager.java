@@ -27,18 +27,8 @@ public record ConfigManager(SimpleEnderButt plugin) {
         plugin.reloadConfig();
     }
 
-    public String getCooldown() {
-        String cooldown;
-
-        cooldown = plugin.getConfig().getString("cooldown");
-
-        if (cooldown == "" || cooldown == "-1") {
-
-            return null;
-
-        }
-
-        return cooldown;
+    public int getCooldownTime() {
+        return plugin.getConfig().getInt("cooldown_time");
     }
 
     public String getItemName() {
