@@ -4,6 +4,7 @@ import dev.vulpine.simpleEnderButt.SimpleEnderButt;
 import dev.vulpine.simpleEnderButt.util.Colorize;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -58,7 +59,7 @@ public class MainListener implements Listener {
             player.setVelocity(location.multiply(plugin.getConfig().getDouble("item.power")));
 
             if (plugin.getConfig().getBoolean("sound.enabled")) {
-                player.playSound(player.getLocation(), plugin.getConfig().getString("sound.name"), (float) plugin.getConfig().getDouble("sound.volume"), (float) plugin.getConfig().getDouble("sound.pitch"));
+                player.playSound(player.getLocation(), Sound.valueOf(plugin.getConfig().getString("sound.name")), (float) plugin.getConfig().getDouble("sound.volume"), (float) plugin.getConfig().getDouble("sound.pitch"));
             }
 
             event.setCancelled(true);
