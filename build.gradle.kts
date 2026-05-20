@@ -22,7 +22,7 @@ dependencies {
 
 group = "dev.vulpine"
 val packageName = "simpleEnderButt"
-version = "1.0"
+version = "1.1"
 description = "SimpleEnderButt"
 
 java {
