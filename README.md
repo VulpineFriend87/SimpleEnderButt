@@ -5,6 +5,6 @@
 ---
 
 # SimpleEnderButt
-The best EnderButt plugin out there. Simple & Customizable.
+A simple and customizable Minecraft lobby plugin that lets players launch themselves through the air using an EnderButt item.
 
 Get the plugin on SpigotMC [here](https://www.spigotmc.org/resources/simpleenderbutt.120404/)
