@@ -12,6 +12,8 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.VERSION }}
       type: ${{ steps.type.outputs.TYPE }}
+      changelog: ${{ steps.changelog.outputs.CHANGELOG }}
+      title: ${{ steps.changelog.outputs.TITLE }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,6 +36,41 @@ jobs:
         run: |
           VERSION=$(git tag --points-at HEAD | grep -E '^v' | head -n 1 | sed 's/^v//' || true)
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build changelog
+        id: changelog
+        run: |
+          CURRENT_TAG=$(git tag --points-at HEAD | grep -E '^v' | head -n 1 || true)
+
+          if [ -z "$CURRENT_TAG" ]; then
+            exit 0
+          fi
+
+          TITLE=$(git tag -l "$CURRENT_TAG" --format='%(contents:subject)')
+          NOTES=$(git tag -l "$CURRENT_TAG" --format='%(contents:body)')
+
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 "${CURRENT_TAG}^" 2>/dev/null || true)
+
+          {
+            echo "TITLE<<TITLE_EOF"
+            echo "$TITLE"
+            echo "TITLE_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+          {
+            echo "CHANGELOG<<CHANGELOG_EOF"
+
+            if [ -n "$NOTES" ]; then
+              printf '%s\n' "$NOTES"
+            fi
+
+            if [ -n "$PREVIOUS_TAG" ]; then
+              echo ""
+              echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREVIOUS_TAG}...${CURRENT_TAG}"
+            fi
+
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Detect release type
         id: type
@@ -70,8 +107,9 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: build/libs/*.jar
           version: ${{ needs.build.outputs.version }}
-          name: ${{ needs.build.outputs.version }}
+          name: ${{ needs.build.outputs.title || needs.build.outputs.version }}
           version-type: ${{ needs.build.outputs.type }}
+          changelog: ${{ needs.build.outputs.changelog }}
           loaders: |
             paper
             spigot
