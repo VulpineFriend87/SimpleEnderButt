@@ -1,20 +1,27 @@
 [versions]
-spigot = "1.18-R0.1-SNAPSHOT"
+paper = "1.18.2-R0.1-SNAPSHOT"
 
-minimessage = "4.25.0"
-minimessage-legacy = "4.25.0"
+okaeri = "5.0.13"
 bstats = "3.2.1"
+folialib = "0.5.2"
+commons = "0.3.1"
+lamp = "4.0.0-rc.18"
 
 shadow = "9.3.0"
 lombok = "9.2.0"
+pluginyml = "0.9.0"
 
 [libraries]
-spigot = { module = "org.spigotmc:spigot-api", version.ref = "spigot" }
+paper = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
 
-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "minimessage" }
-minimessage-legacy = { module = "net.kyori:adventure-text-serializer-legacy", version.ref = "minimessage-legacy" }
+okaeri = { module = "eu.okaeri:okaeri-configs-yaml-bukkit", version.ref = "okaeri" }
 bstats = { module = "org.bstats:bstats-bukkit", version.ref = "bstats" }
+folialib = { module = "com.tcoded:FoliaLib", version.ref = "folialib" }
+commons = { module = "top.vulpine:commons", version.ref = "commons" }
+lamp-common = { module = "io.github.revxrsal:lamp.common", version.ref = "lamp" }
+lamp-bukkit = { module = "io.github.revxrsal:lamp.bukkit", version.ref = "lamp" }
 
-[plugins ]
+[plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 lombok = { id = "io.freefair.lombok", version.ref = "lombok" }
+pluginyml = { id = "de.eldoria.plugin-yml.bukkit", version.ref = "pluginyml" }
