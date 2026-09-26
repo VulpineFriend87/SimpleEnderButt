@@ -28,7 +28,7 @@ dependencies {
 
 group = "top.vulpine"
 val packageName = "simpleEnderButt"
-version = "1.1"
+version = "1.2"
 description = "A simple and customizable Minecraft lobby plugin that lets players launch themselves through the air using an EnderButt item."
 
 java {
